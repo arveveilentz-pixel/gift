@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Page 💖</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      background: #ffe6f0;
+      color: #b30059;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    #puzzle {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-gap: 3px;
+      margin: 20px auto;
+    }
+    .tile {
+      width: 100px;
+      height: 100px;
+      background-size: 300px 300px;
+      border: 2px solid #ffb3d9;
+      cursor: grab;
+      transition: transform 0.2s;
+    }
+    .tile.dragging {
+      opacity: 0.5;
+      transform: scale(0.95);
+    }
+    p.note {
+      font-size: 1em;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>💖 Happy Love Page 💖</h1>
+  <p class="note">Susun puzzle fotomu untuk melihat pesan cinta!</p>
+
+  <div id="puzzle"></div>
+
+  <script>
+    const puzzle = document.getElementById('puzzle');
+    const imgUrl = 'foto.jpg'; // ganti dengan nama file gambar kamu
+    let positions = [];
+
+    // Buat array posisi 0-8
+    for(let i=0; i<9; i++) positions.push(i);
+
+    // Acak posisi
+    positions = positions.sort(() => Math.random() - 0.5);
+
+    // Buat tile
+    positions.forEach(pos => {
+      const tile = document.createElement('div');
+      tile.classList.add('tile');
+      tile.style.backgroundImage = `url(${imgUrl})`;
+      tile.style.backgroundPosition = `-${(pos % 3) * 100}px -${Math.floor(pos / 3) * 100}px`;
+      tile.dataset.index = pos;
+      tile.setAttribute('draggable', true);
+      puzzle.appendChild(tile);
+    });
+
+    // Drag & drop logic
+    let dragSrc = null;
+
+    puzzle.addEventListener('dragstart', e => {
+      if(e.target.classList.contains('tile')){
+        dragSrc = e.target;
+        e.target.classList.add('dragging');
+      }
+    });
+
+    puzzle.addEventListener('dragend', e => {
+      e.target.classList.remove('dragging');
+    });
+
+    puzzle.addEventListener('dragover', e => e.preventDefault());
+
+    puzzle.addEventListener('drop', e => {
+      e.preventDefault();
+      if(e.target.classList.contains('tile') && dragSrc !== e.target){
+        const temp = dragSrc.style.backgroundPosition;
+        dragSrc.style.backgroundPosition = e.target.style.backgroundPosition;
+        e.target.style.backgroundPosition = temp;
+        checkPuzzle();
+      }
+    });
+
+    // Cek puzzle selesai
+    function checkPuzzle() {
+      const tiles = document.querySelectorAll('.tile');
+      let correct = true;
+      tiles.forEach((tile, idx) => {
+        const row = Math.floor(tile.dataset.index / 3);
+        const col = tile.dataset.index % 3;
+        const correctPos = `-${col * 100}px -${row * 100}px`;
+        if(tile.style.backgroundPosition !== correctPos) correct = false;
+      });
+      if(correct) setTimeout(() => alert("🎉 Selamat! Puzzle selesai! 💖"), 100);
+    }
+  </script>
+</body>
+</html>

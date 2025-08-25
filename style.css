@@ -1,0 +1,58 @@
+/* style.css */
+
+/* Reset basic */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(120deg, #ffe6f0, #fff0f5);
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+/* Judul */
+h1 {
+    color: #ff4d6d;
+    font-size: 3em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px #ffd6e8;
+}
+
+/* Gambar/foto */
+img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #ffb3c6;
+    box-shadow: 0 0 20px rgba(255, 77, 109, 0.5);
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+/* Teks tambahan */
+p {
+    font-size: 1.2em;
+    color: #ff4d6d;
+    margin-top: 10px;
+}
+
+/* Footer/penutup */
+footer {
+    margin-top: 30px;
+    font-size: 1em;
+    color: #ff80a1;
+}
